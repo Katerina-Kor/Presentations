@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h2>Regular Expressions</h2>
+          <h3>Basics</h3>
+        </section>
+
+				<section>
+          <p>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">
+              <b>Regular expressions</b>
+            </a> are patterns<br>
+            used to match character combinations in strings
+          </p>
+        </section>
+
+        <section data-auto-animate id="fragments">
+          <h3 data-id="code-title">Creation</h3>
+          <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1|3"><script type="text/template">
+            const regexp1 = new RegExp("mom", "gi");
+
+            const regexp2 = /mom/gi;
+          </script></code></pre>
+        </section>
+
+        <section>
+          <section id="fragments">
+            <h3>Flags</h3>
+            <p class="fragment">Regular expressions have 8 optional flags.<br>
+              Flags can be used separately or together in any order.</p>
+            <p class="fragment">g i s m u v y d</p>
+          </section>
+          <section data-auto-animate>
+            <p>Flag g - global search</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7"><script type="text/template">
+              const str = 'New home, new car, new me';
+
+              const regexp1 = /new/;
+              str.match(regexp1); // ["new"]
+
+              const regexp2 = /new/g;
+              str.match(regexp2); // ["new","new"]
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>Flag i - case-insensitive search</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7"><script type="text/template">
+              const str = 'New home, new car, new me';
+
+              const regexp1 = /new/;
+              str.match(regexp1); // ["new"]
+
+              const regexp2 = /new/i;
+              str.match(regexp2); // ["New"]
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>Flag s - enables "dotAll" mode</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7"><script type="text/template">
+              const str = 'HTML\n';
+
+              const regexp1 = /HTML./;
+              str.match(regexp1); // null
+
+              const regexp2 = /HTML./s;
+              str.match(regexp2); // ["HTML\n"]
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>Flag m - multiline mode</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-6|1-3,8-9"><script type="text/template">
+              const str = `1 chapter: HTML
+              2 chapter: CSS
+              3 chapter: JS`;
+
+              const regexp1 = /^\d/g;
+              str.match(regexp1); // ["1"]
+
+              const regexp2 = /^\d/gm;
+              str.match(regexp2); // ["1","2","3"]
+            </script></code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section id="fragments">
+            <h3>Character classes</h3>
+            <p class="fragment">are special notation that matches any symbol from a certain set</p>
+            <p class="fragment">\d \D \s \S \w \W .</p>
+          </section>
+          <section data-auto-animate>
+            <p>\d - any single digit</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7|1,9-10"><script type="text/template">
+              const str = 'I am 18 years old';
+
+              const regexp1 = /\d/;
+              str.match(regexp1); // ["1"]
+
+              const regexp2 = /\d\d/;
+              str.match(regexp2); // ["18"]
+
+              const regexp3 = /\d/g;
+              str.match(regexp3); // ["1","8"]
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>\D - any character except digits </p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4"><script type="text/template">
+              const str = '$30';
+
+              const regexp = /\D/;
+              str.match(regexp); // ["$"]
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>\s - space characters</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7"><script type="text/template">
+              const regexp = /\s/;
+
+              const str1 = 'nospace';
+              str1.match(regexp); // null
+
+              const str2 = 'with space';
+              str2.match(regexp); // [" "]
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>\S - any character except space characters</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7"><script type="text/template">
+              const regexp = /\S/;
+
+              const str1 = 'F';
+              str1.match(regexp); // ["F"]
+
+              const str2 = '\n';
+              str2.match(regexp); // null
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>\w - 'wordly' characters</p>
+            <p class="fragment">letters of Latin alphabet, digits or '_'</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7|1,9-10|12-14"><script type="text/template">
+              const regexp1 = /CSS\w/;
+
+              const str1 = 'CSS4';
+              str1.match(regexp1); // ["CSS4"]
+
+              const str2 = 'CSS_';
+              str2.match(regexp1); // ["CSS_"]
+
+              const str3 = 'CSSH';
+              str3.match(regexp1); // ["CSSH"]
+
+              const regexp2 = /\w/;
+              const str4 = 'Й';
+              str4.match(regexp2); // null
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>\W - any character except 'wordly' characters</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7"><script type="text/template">
+              const regexp = /\W/g;
+
+              const str1 = '$500';
+              str1.match(regexp); // ["$"]
+
+              const str2 = 'Рус';
+              str2.match(regexp); // ["Р","у","с"]
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>A dot . - any character except a newline '\n'</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7|6,9-10"><script type="text/template">
+              const regexp1 = /./g;
+
+              const str1 = '$500';
+              str1.match(regexp1); // ["$","5","0","0"]
+
+              const str2 = 'Рус\n';
+              str2.match(regexp1); // ["Р","у","с"]
+
+              const regexp2 = /./gs;
+              str2.match(regexp2); // ["Р","у","с","\n"]
+            </script></code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section id="fragments">
+            <h3>Anchors</h3>
+            <p class="fragment">are two special characters: ^ and $</p>
+          </section>
+          <section data-auto-animate>
+            <p>^ - matches at the beginning of the string</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7"><script type="text/template">
+              const str = 'Let it snow';
+
+              const regexp1 = /^Let/;
+              regexp1.test(str); // true
+
+              const regexp2 = /^Lets/;
+              regexp2.test(str); // false
+            </script></code></pre>
+          </section>
+          <section data-auto-animate>
+            <p>$ - matches at the end of the string</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|1,6-7"><script type="text/template">
+              const str = 'Let it snow';
+
+              const regexp1 = /snow$/;
+              regexp1.test(str); // true
+
+              const regexp2 = /snowing$/;
+              regexp2.test(str); // false
+            </script></code></pre>
+          </section>
+        </section>
+
+        <section id="fragments">
+          <h3>Special characters</h3>
+          <p class="fragment">have special meaning in Regular Expressions</p>
+          <p class="fragment">[ ] { } ( ) \ ^ $ . | ? * +</p>
+        </section>
+
+        <section id="fragments" data-auto-animate>
+          <h4>Sets and ranges [ ]</h4>
+          <p class="fragment">search any characters among written inside</p>
+          <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-4|5-8|5,10-11|13-15"><script type="text/template">
+            const str1 = 'Next country is Iraq';
+            const regexp1 = /Ira[nq]/;
+            str1.match(regexp1); // ["Iraq"]
+
+            const str2 = 'Cat 1';
+
+            const regexp2 = /[A-F]/;
+            str2.match(regexp2); // ["C"]
+
+            const regexp3 = /[\w]/g;
+            str2.match(regexp3); // ["C","a","t","1"]
+
+            const str3 = 'Cat-1. $30';
+            const regexp4 = /[^\w]/g;
+            str3.match(regexp4); // ["-","."," ","$"]
+          </script></code></pre>
+        </section>
+
+        <section>
+          <section id="fragments" data-auto-animate>
+            <h4>Quantifiers { } + * ?</h4>
+            <p class="fragment">search exactly numbers of characters</p>
+          </section>
+          <section>
+            <p>{n} specify how many characters we need</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-3|5-7|9-11"><script type="text/template">
+              const str = 'It cost $155';
+              const regexp = /\d{3}/;
+              str.match(regexp); // ["155"]
+
+              const str1 = 'It cost $155 or $1550 or %15500';
+              const regexp1 = /\d{3,5}/g;
+              str1.match(regexp1); // ["155","1550","15500"]
+
+              const str2 = 'It cost %15500';
+              const regexp1 = /\d{3,}/;
+              str1.match(regexp1); // ["15500"]
+            </script></code></pre>
+          </section>
+          <section>
+            <p>+ - one or more</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-3"><script type="text/template">
+              const str = '+375(29)-55-55-555';
+              const regexp = /\d+/g;
+              str.match(regexp); // ["375","29","55","55","555"]
+            </script></code></pre>
+          </section>
+          <section>
+            <p>? - zero or one</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-3"><script type="text/template">
+              const str = 'be or bee';
+              const regexp = /bee?/g;
+              str.match(regexp); // ["be","bee"]
+            </script></code></pre>
+          </section>
+          <section>
+            <p>* - zero or more</p>
+            <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-3|5-7|9-11"><script type="text/template">
+              const str = 'go gooo gooooo';
+              const regexp = /go*/g;
+              str.match(regexp); // ["go","gooo","gooooo"]
+            </script></code></pre>
+          </section>
+        </section>
+
+        <section id="fragments" data-auto-animate>
+          <h4>Capturing groups ( )</h4>
+          <p class="fragment">use quantifier after the parentheses to apply to everything inside</p>
+          <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-3"><script type="text/template">
+            const str = 'go gogo';
+            const regexp = /(go)+/g;
+            str.match(regexp); // ["go","gogo"]
+          </script></code></pre>
+        </section>
+
+        <section id="fragments" data-auto-animate>
+          <h4>Alternation |</h4>
+          <p class="fragment">is simple 'or'</p>
+          <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-3"><script type="text/template">
+            const str = 'First HTML, then CSS and after JavaScript';
+            const regexp = /html|css|java(script)?/gi;
+            str.match(regexp); // ["HTML","CSS","JavaScript"]
+          </script></code></pre>
+        </section>
+
+        <section id="fragments" data-auto-animate>
+          <h4>Escaping \</h4>
+          <pre class="fragment" data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1-3|5-7|9-11|9,13-14|16-18"><script type="text/template">
+            const str = 'Chapter 3.2';
+            const regexp = /\d\.\d/;
+            str.match(regexp); // ["3.2"]
+
+            const str1 = 'function f()';
+            const regexp1 = /f\(\)/;
+            str1.match(regexp1); // ["f()"]
+
+            const str2 = '/';
+            const regexp2 = /\//;
+            str2.match(regexp2); // ["/"]
+
+            const regexp3 = new RegExp("/");
+            str2.match(regexp3); // ["/"]
+
+            const str4 = 'Chapter 3.2';
+            const regexp4 = new RegExp("\\d\\.\\d")
+            str.match(regexp); // ["3.2"]
+          </script></code></pre>
+        </section>
+
+        <section>
+          <h2>Thank you for attention!</h2>
+        </section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
